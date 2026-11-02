@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fashion Session | Women's Fashion</title>
+  <style>
+    :root {
+      --ink: #282120;
+      --muted: #756d69;
+      --cream: #fbf8f4;
+      --rose: #b85c69;
+      --rose-dark: #963f4d;
+      --blush: #f2e3df;
+      --line: #eadfda;
+      --white: #fff;
+      --shadow: 0 12px 38px rgba(55, 34, 30, .1);
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Arial, Helvetica, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      background: #352725;
+      color: white;
+      text-align: center;
+      padding: 9px 14px;
+      font-size: 12px;
+      letter-spacing: .08em;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(251, 248, 244, .96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      font: 700 27px var(--serif);
+      letter-spacing: -.04em;
+      white-space: nowrap;
+    }
+    .brand span { color: var(--rose); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: #514744;
+      font-size: 14px;
+    }
+    .nav-links a:hover { color: var(--rose-dark); }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .icon-btn, .lang-btn {
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 10px 14px;
+    }
+    .cart-count {
+      display: inline-grid;
+      place-items: center;
+      min-width: 20px;
+      height: 20px;
+      margin-left: 4px;
+      padding: 0 5px;
+      border-radius: 50px;
+      background: var(--rose);
+      color: white;
+      font-size: 11px;
+    }
+
+    .hero {
+      max-width: 1200px;
+      margin: 28px auto 58px;
+      padding: 0 24px;
+    }
+    .hero-inner {
+      min-height: 485px;
+      border-radius: 8px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.02fr .98fr;
+      background: #eadbd4;
+    }
+    .hero-copy {
+      padding: clamp(32px, 6vw, 78px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .eyebrow {
+      color: var(--rose-dark);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    h1 {
+      max-width: 540px;
+      margin: 16px 0;
+      font: 500 clamp(42px, 6vw, 70px)/1.04 var(--serif);
+      letter-spacing: -.045em;
+    }
+    .hero-copy p {
+      color: #62534e;
+      line-height: 1.7;
+      max-width: 420px;
+      margin: 0 0 26px;
+    }
+    .primary-btn, .outline-btn {
+      border: 0;
+      background: var(--rose);
+      color: white;
+      padding: 14px 22px;
+      border-radius: 3px;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+    .primary-btn:hover { background: var(--rose-dark); transform: translateY(-1px); }
+    .outline-btn {
+      color: var(--rose-dark);
+      background: transparent;
+      border: 1px solid var(--rose);
+    }
+    .outline-btn:hover { background: var(--blush); }
+    .hero-image {
+      min-height: 360px;
+      background:
+        linear-gradient(0deg, rgba(50, 29, 25, .05), rgba(50, 29, 25, .05)),
+        url("https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=85") center 35%/cover;
+    }
+
+    .benefits {
+      max-width: 1200px;
+      margin: 0 auto 58px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .benefit {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding: 20px;
+      background: white;
+      border: 1px solid var(--line);
+    }
+    .benefit-icon { font-size: 22px; }
+    .benefit strong { display: block; font-size: 14px; margin-bottom: 4px; }
+    .benefit small { color: var(--muted); line-height: 1.5; }
+
+    section.shop {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 24px 78px;
+      scroll-margin-top: 100px;
+    }
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .section-heading h2 {
+      font: 500 clamp(32px, 4vw, 44px) var(--serif);
+      margin: 8px 0 0;
+    }
+    .section-heading p { color: var(--muted); margin: 0; line-height: 1.6; }
+    .shop-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .search {
+      flex: 1 1 220px;
+      position: relative;
+    }
+    .search input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 3px;
+      outline-color: var(--rose);
+    }
+    .filter-select {
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      background: white;
+      color: var(--ink);
+    }
+    .category-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 7px;
+      margin-bottom: 20px;
+    }
+    .category-btn {
+      white-space: nowrap;
+      padding: 9px 15px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      background: white;
+      color: #594e4a;
+      font-size: 13px;
+    }
+    .category-btn.active, .category-btn:hover {
+      background: var(--ink);
+      color: white;
+      border-color: var(--ink);
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px 16px;
+    }
+    .product-card { min-width: 0; }
+    .product-image-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4 / 5;
+      background: var(--blush);
+    }
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .45s ease;
+    }
+    .product-card:hover .product-image { transform: scale(1.045); }
+    .badge {
+      position: absolute;
+      left: 11px;
+      top: 11px;
+      background: white;
+      padding: 6px 9px;
+      text-transform: uppercase;
+      font-size: 9px;
+      letter-spacing: .1em;
+    }
+    .quick-add {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      width: calc(100% - 20px);
+      border: 0;
+      background: rgba(255,255,255,.95);
+      color: var(--ink);
+      padding: 12px;
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: .2s ease;
+    }
+    .product-card:hover .quick-add, .quick-add:focus { opacity: 1; transform: none; }
+    .product-info { padding: 12px 2px 0; }
+    .product-category {
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .product-name { font: 500 19px var(--serif); margin: 6px 0; }
+    .product-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .price { font-weight: 700; }
+    .old-price { color: #988d88; text-decoration: line-through; font-size: 13px; margin-left: 5px; }
+    .buy-link {
+      border: 0;
+      background: none;
+      color: var(--rose-dark);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 0 7px 7px;
+    }
+    .no-results {
+      grid-column: 1/-1;
+      padding: 44px 20px;
+      text-align: center;
+      color: var(--muted);
+      background: white;
+    }
+
+    .story {
+      background: #eee1dc;
+      padding: 60px 24px;
+      text-align: center;
+    }
+    .story-inner { max-width: 700px; margin: auto; }
+    .story h2 { font: 500 38px var(--serif); margin: 12px 0; }
+    .story p { color: #665852; line-height: 1.8; }
+
+    footer {
+      background: #302422;
+      color: #f8efeb;
+      padding: 48px 24px 22px;
+    }
+    .footer-grid {
+      max-width: 1152px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 35px;
+    }
+    .footer-grid h3 { font: 500 25px var(--serif); margin: 0 0 12px; }
+    .footer-grid p, .footer-grid a { color: #d7c9c3; font-size: 14px; line-height: 1.8; }
+    .footer-grid a:hover { color: white; }
+    .footer-bottom {
+      max-width: 1152px;
+      margin: 32px auto 0;
+      padding-top: 18px;
+      border-top: 1px solid #554744;
+      color: #c6b7b1;
+      font-size: 12px;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      background: rgba(25, 16, 14, .55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .overlay.open { display: flex; }
+    .modal {
+      width: min(620px, 100%);
+      max-height: 90vh;
+      overflow: auto;
+      background: white;
+      padding: 25px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 15px;
+      margin-bottom: 18px;
+    }
+    .modal-head h2 { font: 500 28px var(--serif); margin: 0; }
+    .close-btn {
+      border: 0;
+      background: transparent;
+      font-size: 25px;
+      color: var(--muted);
+      line-height: 1;
+    }
+    .cart-row {
+      display: grid;
+      grid-template-columns: 62px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .cart-row img { width: 62px; height: 76px; object-fit: cover; }
+    .cart-row h4 { margin: 0 0 5px; font: 17px var(--serif); }
+    .cart-row small { color: var(--muted); }
+    .qty-tools { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+    .qty-tools button {
+      width: 25px; height: 25px; border: 1px solid var(--line); background: white;
+    }
+    .remove-btn { border: 0 !important; color: var(--rose-dark); font-size: 12px; width: auto !important; }
+    .totals { margin: 17px 0; }
+    .total-line { display: flex; justify-content: space-between; padding: 6px 0; }
+    .total-line.grand { border-top: 1px solid var(--line); padding-top: 13px; font-weight: 700; font-size: 18px; }
+    .empty-cart { text-align: center; padding: 30px 5px; color: var(--muted); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full { grid-column: 1/-1; }
+    .field label { font-size: 12px; font-weight: 700; }
+    .field input, .field select, .field textarea {
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      padding: 11px;
+      outline-color: var(--rose);
+      width: 100%;
+    }
+    .field textarea { min-height: 72px; resize: vertical; }
+    .payment-note, .notice {
+      background: #fbf3ef;
+      border-left: 3px solid var(--rose);
+      padding: 12px;
+      color: #65514a;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 15px 0;
+    }
+    .order-result { line-height: 1.7; }
+    .order-result h3 { font: 25px var(--serif); }
+    .receipt {
+      background: #fcf9f6;
+      border: 1px solid var(--line);
+      padding: 15px;
+      margin: 15px 0;
+    }
+    .receipt-line { display: flex; justify-content: space-between; gap: 15px; margin: 7px 0; }
+    .receipt-total { border-top: 1px solid var(--line); padding-top: 10px; font-weight: 700; }
+    .button-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+
+    @media (max-width: 850px) {
+      .nav-links { gap: 14px; }
+      .product-grid { grid-template-columns: repeat(3, 1fr); }
+      .hero-inner { min-height: 400px; }
+    }
+    @media (max-width: 640px) {
+      .nav { padding: 13px 16px; }
+      .brand { font-size: 23px; }
+      .nav-links { display: none; }
+      .icon-btn, .lang-btn { padding: 9px 11px; }
+      .hero { padding: 0 14px; margin: 15px auto 38px; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-copy { padding: 34px 25px; }
+      .hero-image { min-height: 270px; order: -1; }
+      .benefits { padding: 0 14px; grid-template-columns: 1fr; margin-bottom: 40px; }
+      .benefit { padding: 14px; }
+      section.shop { padding: 0 14px 54px; }
+      .section-heading { display: block; }
+      .section-heading p { margin-top: 8px; }
+      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 10px; }
+      .product-name { font-size: 17px; }
+      .quick-add { opacity: 1; transform: none; padding: 10px 5px; font-size: 12px; }
+      .story { padding: 42px 20px; }
+      .story h2 { font-size: 32px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 20px; }
+      .modal { padding: 18px; }
+    }
+    @media (max-width: 380px) {
+      .cart-label { display: none; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar" data-i18n="announcement">Complimentary shipping details shown at checkout • Delivery across India</div>
+
+  <header>
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#">Fashion <span>Session</span></a>
+      <div class="nav-links">
+        <a href="#home" data-i18n="home">Home</a>
+        <a href="#shop" data-i18n="shop">Shop</a>
+        <a href="#story" data-i18n="about">Our story</a>
+        <a href="#contact" data-i18n="contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="lang-btn" id="languageButton" type="button">বাংলা</button>
+        <button class="icon-btn" id="cartButton" type="button" aria-label="Open shopping cart">
+          🛍 <span class="cart-label" data-i18n="bag">Bag</span><span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow" data-i18n="heroEyebrow">Tradition, beautifully dressed</span>
+          <h1 data-i18n="heroTitle">A little elegance for every occasion.</h1>
+          <p data-i18n="heroText">Discover graceful sarees and thoughtfully chosen styles, brought to you from Fashion Session in Gairkata.</p>
+          <a class="primary-btn" href="#shop" data-i18n="explore">Explore the collection</a>
+        </div>
+        <div class="hero-image" role="img" aria-label="Elegant Indian saree fashion"></div>
+      </div>
+    </section>
+
+    <section class="benefits" aria-label="Store benefits">
+      <div class="benefit"><span class="benefit-icon">✦</span><div><strong data-i18n="benefit1">Thoughtful selection</strong><small data-i18n="benefit1Text">Traditional favourites and modern looks.</small></div></div>
+      <div class="benefit"><span class="benefit-icon">⌖</span><div><strong data-i18n="benefit2">Delivery across India</strong><small data-i18n="benefit2Text">From Gairkata, West Bengal to your doorstep.</small></div></div>
+      <div class="benefit"><span class="benefit-icon">♡</span><div><strong data-i18n="benefit3">Here to help</strong><small data-i18n="benefit3Text">Call or WhatsApp us with your questions.</small></div></div>
+    </section>
+
+    <section class="shop" id="shop">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow" data-i18n="curated">CURATED FOR YOU</span>
+          <h2 data-i18n="shopHeading">Shop the collection</h2>
+        </div>
+        <p data-i18n="shopSub">Find a style for everyday moments and celebrations.</p>
+      </div>
+      <div class="shop-tools">
+        <div class="search"><input id="searchInput" type="search" placeholder="Search sarees and styles..." aria-label="Search products"></div>
+        <select class="filter-select" id="sortSelect" aria-label="Sort products">
+          <option value="featured">Featured</option>
+          <option value="low">Price: Low to high</option>
+          <option value="high">Price: High to low</option>
+        </select>
+      </div>
+      <div class="category-row" id="categories"></div>
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <section class="story" id="story">
+      <div class="story-inner">
+        <span class="eyebrow" data-i18n="ourStory">FASHION SESSION • GAIRKATA</span>
+        <h2 data-i18n="storyTitle">Style that feels like you.</h2>
+        <p data-i18n="storyText">Fashion Session brings together traditional charm and contemporary style. Browse our collection, then order online or contact us directly for personal assistance.</p>
+        <a class="outline-btn" href="#contact" data-i18n="talkToUs">Talk to us</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="footer-grid">
+      <div>
+        <h3>Fashion Session</h3>
+        <p data-i18n="footerText">Women's fashion, selected with care in Gairkata, West Bengal.</p>
+      </div>
+      <div>
+        <h3 data-i18n="contactUs">Contact us</h3>
+        <p><a href="tel:+918617319058">☎ 8617319058</a><br>
+        <a href="mailto:jd4798248@gmail.com">✉ jd4798248@gmail.com</a><br>
+        <a href="https://wa.me/918617319058" target="_blank" rel="noopener">WhatsApp us</a></p>
+      </div>
+      <div>
+        <h3 data-i18n="ordering">Ordering & delivery</h3>
+        <p data-i18n="orderingText">Cash on delivery or mobile payment. Shipping is listed separately on your order slip and included in the total.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© <span id="year"></span> Fashion Session · Gairkata, Jalpaiguri, West Bengal</div>
+  </footer>
+
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="modalTitle">Your bag</h2>
+        <button class="close-btn" id="closeModal" aria-label="Close dialog" type="button">×</button>
+      </div>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    // Demo catalogue. Replace these sample items, prices, and photos with your real products.
+    const products = [
+      { id: 1, name: "Banarasi Rose Saree", bn: "বেনারসি রোজ শাড়ি", category: "Banarasi Sarees", price: 2490, old: 2990, badge: "Bestseller", image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80" },
+      { id: 2, name: "Classic Cotton Saree", bn: "ক্লাসিক সুতির শাড়ি", category: "Cotton Sarees", price: 1290, old: null, badge: "Everyday", image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80" },
+      { id: 3, name: "Silk Evening Saree", bn: "সিল্ক ইভনিং শাড়ি", category: "Silk Sarees", price: 3290, old: null, badge: "New", image: "https://images.unsplash.com/photo-1583391733956-6c78276477e3?auto=format&fit=crop&w=800&q=80" },
+      { id: 4, name: "Festive Heritage Saree", bn: "উৎসবের ঐতিহ্যবাহী শাড়ি", category: "Traditional Sarees", price: 2190, old: 2590, badge: "Limited", image: "https://images.unsplash.com/photo-1610189012906-4c1d4bbf4f72?auto=format&fit=crop&w=800&q=80" },
+      { id: 5, name: "Midnight Party Saree", bn: "মিডনাইট পার্টি শাড়ি", category: "Party Wear Sarees", price: 2890, old: null, badge: "New", image: "https://images.unsplash.com/photo-1610030469668-8e9f641aaf2c?auto=format&fit=crop&w=800&q=80" },
+      { id: 6, name: "Designer Floral Saree", bn: "ডিজাইনার ফ্লোরাল শাড়ি", category: "Designer Sarees", price: 3590, old: null, badge: "Special", image: "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=800&q=80" },
+      { id: 7, name: "Soft Daylight Cotton", bn: "সফট ডেলাইট কটন", category: "Cotton Sarees", price:
